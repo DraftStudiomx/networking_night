@@ -22,7 +22,13 @@ export async function sendMagicLink(_: LoginState, form: FormData): Promise<Logi
         emailRedirectTo: `${config.siteUrl}/auth/callback?next=${encodeURIComponent(next)}`,
       },
     });
-    if (error) return { error: "No pudimos enviar el enlace. Intenta en un minuto." };
+    if (error) {
+      console.error("magic link failed", error.status, error.code, error.message);
+      if (error.status === 429 || error.code === "over_email_send_rate_limit") {
+        return { error: "Se alcanzó el límite de enlaces por hora. Espera unos minutos e intenta de nuevo." };
+      }
+      return { error: "No pudimos enviar el enlace. Intenta en un minuto." };
+    }
     return { ok: true };
   } catch (e) {
     if (e instanceof NotConfiguredError) return { error: "El acceso todavía no está configurado." };
