@@ -36,28 +36,34 @@ export async function fulfillOrder(orderId: string, paymentIntent: string | null
     .order("position");
   const list = (tickets ?? []) as TicketRow[];
 
-  const pdf = await ticketsPdf(list.map((t) => toPdfTicket(t, list.length)));
-  await sendOrderConfirmed({
-    to: order.buyer_email,
-    buyerName: order.buyer_name,
-    orderUrl: orderUrl(order.access_token),
-    tickets: list.map((t) => ({ attendeeName: t.attendee_name, code: t.code })),
-    totalMXN: order.total_mxn,
-    pdf,
-  });
-
-  // guests with their own email get their own ticket
-  for (const t of list) {
-    if (!t.attendee_email || t.attendee_email === order.buyer_email) continue;
-    const single = await ticketsPdf([toPdfTicket(t, list.length)]);
-    await sendTicketToAttendee({
-      to: t.attendee_email,
-      attendeeName: t.attendee_name,
-      fromName: order.buyer_name,
-      ticketUrl: ticketUrl(t.code, t.version),
-      code: t.code,
-      pdf: single,
+  // The tickets are already valid at this point. A mail failure must not fail the webhook
+  // (the order would never be retried, since it is now paid); the panel can resend it.
+  try {
+    const pdf = await ticketsPdf(list.map((t) => toPdfTicket(t, list.length)));
+    await sendOrderConfirmed({
+      to: order.buyer_email,
+      buyerName: order.buyer_name,
+      orderUrl: orderUrl(order.access_token),
+      tickets: list.map((t) => ({ attendeeName: t.attendee_name, code: t.code })),
+      totalMXN: order.total_mxn,
+      pdf,
     });
+
+    // guests with their own email get their own ticket
+    for (const t of list) {
+      if (!t.attendee_email || t.attendee_email === order.buyer_email) continue;
+      const single = await ticketsPdf([toPdfTicket(t, list.length)]);
+      await sendTicketToAttendee({
+        to: t.attendee_email,
+        attendeeName: t.attendee_name,
+        fromName: order.buyer_name,
+        ticketUrl: ticketUrl(t.code, t.version),
+        code: t.code,
+        pdf: single,
+      });
+    }
+  } catch (e) {
+    console.error(`order ${orderId} paid but email failed; resend from /admin`, e);
   }
 }
 
