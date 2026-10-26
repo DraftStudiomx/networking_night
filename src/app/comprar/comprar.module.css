@@ -97,6 +97,14 @@
   color: var(--muted);
   --ls: 0.24em;
 }
+.req {
+  margin-left: 0.3em;
+  color: var(--red);
+  letter-spacing: 0;
+}
+.hint .req {
+  margin: 0;
+}
 .optional {
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -114,6 +122,10 @@
   font-size: 20px;
   color: var(--ink);
   transition: border-color 0.2s var(--ease-out);
+}
+.field input::placeholder {
+  color: var(--muted);
+  opacity: 0.45;
 }
 .field input:focus {
   outline: none;

@@ -5,7 +5,7 @@ import { useId, useState } from "react";
 import { Ticket } from "@/components/Ticket";
 import { Rings } from "@/components/Marks";
 import { EVENT, formatMXN, type Membership } from "@/lib/event";
-import { orderSchema } from "@/lib/schema";
+import { formatPhone, orderSchema } from "@/lib/schema";
 import s from "./comprar.module.css";
 
 type Attendee = {
@@ -34,9 +34,22 @@ function Field({
     <div className={s.field} data-invalid={!!error || undefined}>
       <label htmlFor={id} className="tr">
         {label}
-        {optional && <span className={s.optional}> (opcional)</span>}
+        {optional ? (
+          <span className={s.optional}> (opcional)</span>
+        ) : (
+          <span className={s.req} aria-hidden="true">
+            *
+          </span>
+        )}
       </label>
-      <input id={id} name={name} aria-invalid={!!error} aria-describedby={error ? `${id}-e` : undefined} {...input} />
+      <input
+        id={id}
+        name={name}
+        required={!optional}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${id}-e` : undefined}
+        {...input}
+      />
       {error && (
         <p id={`${id}-e`} className={s.error}>
           {error}
@@ -63,7 +76,12 @@ function MembershipPicker({
 }) {
   return (
     <fieldset className={s.choice} data-invalid={!!error || undefined}>
-      <legend className="tr">{legend}</legend>
+      <legend className="tr">
+        {legend}
+        <span className={s.req} aria-hidden="true">
+          *
+        </span>
+      </legend>
       <div className={s.options}>
         {(["miembro", "invitado"] as const).map((m) => (
           <label key={m} className={s.option}>
@@ -115,19 +133,51 @@ export function BuyForm({ oxxo, canceled }: { oxxo: boolean; canceled: boolean }
     setGuests((g) => (on ? g.slice(0, -1) : [...g, blankAttendee()]));
   };
 
+  // Checks one field when the visitor leaves it, so mistakes show before submitting.
+  const check = (path: string, override?: Partial<typeof buyer>) => {
+    const parsed = orderSchema.safeParse({ ...buyer, ...override, attendees, privacy });
+    const issue = parsed.success ? undefined : parsed.error.issues.find((x) => x.path.join(".") === path);
+    setErrors(({ [path]: _, ...rest }) => (issue ? { ...rest, [path]: issue.message } : rest));
+  };
+  // emails are trimmed and lower-cased once typed
+  const tidyEmail = (v: string) => v.trim().toLowerCase();
+
   const b = (k: keyof typeof buyer) => ({
     name: k,
     value: buyer[k],
     error: errors[k],
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => setBuyer((v) => ({ ...v, [k]: e.target.value })),
+    onBlur: () => {
+      if (k === "buyerEmail") {
+        const v = tidyEmail(buyer.buyerEmail);
+        setBuyer((x) => ({ ...x, buyerEmail: v }));
+        return check(k, { buyerEmail: v });
+      }
+      check(k);
+    },
   });
-  const g = (i: number, k: keyof Attendee) => ({
-    name: `${k}-${i}`,
-    value: guests[i][k],
-    error: errors[`attendees.${i + (buyerAttends ? 1 : 0)}.${k}`],
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-      setGuests((list) => list.map((a, j) => (j === i ? { ...a, [k]: e.target.value } : a))),
-  });
+  const g = (i: number, k: keyof Attendee) => {
+    const path = `attendees.${i + (buyerAttends ? 1 : 0)}.${k}`;
+    const set = (v: string) => setGuests((list) => list.map((a, j) => (j === i ? { ...a, [k]: v } : a)));
+    return {
+      name: `${k}-${i}`,
+      value: guests[i][k],
+      error: errors[path],
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => set(e.target.value),
+      onBlur: () => {
+        if (k === "attendeeEmail") set(tidyEmail(guests[i].attendeeEmail));
+        check(path);
+      },
+    };
+  };
+
+  // WhatsApp shows as "477 123 4567" while typing; a +52 being typed is left alone until complete
+  const onPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    const d = raw.replace(/\D/g, "");
+    const typingCode = d.length > 10 && d.length < 12 && d.startsWith("52");
+    setBuyer((v) => ({ ...v, buyerPhone: typingCode ? raw : formatPhone(raw) }));
+  };
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -192,10 +242,30 @@ export function BuyForm({ oxxo, canceled }: { oxxo: boolean; canceled: boolean }
           <h2 id="buyer-t" className={`${s.h2} tr`}>
             Tus datos
           </h2>
+          <p className={s.hint}>
+            Los campos con <span className={s.req}>*</span> son obligatorios.
+          </p>
           <div className={`${s.grid} ${s.gridLead}`}>
-            <Field label="Nombre completo" autoComplete="name" {...b("buyerName")} />
-            <Field label="Correo" type="email" autoComplete="email" inputMode="email" {...b("buyerEmail")} />
-            <Field label="WhatsApp" type="tel" autoComplete="tel" inputMode="tel" {...b("buyerPhone")} />
+            <Field label="Nombre completo" autoComplete="name" placeholder="Nombre y apellido" {...b("buyerName")} />
+            <Field
+              label="Correo"
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              autoCapitalize="none"
+              spellCheck={false}
+              placeholder="tucorreo@ejemplo.com"
+              {...b("buyerEmail")}
+            />
+            <Field
+              label="WhatsApp"
+              type="tel"
+              autoComplete="tel-national"
+              inputMode="numeric"
+              placeholder="477 123 4567"
+              {...b("buyerPhone")}
+              onChange={onPhone}
+            />
           </div>
           <MembershipPicker
             legend="¿Eres miembro de BNI?"
@@ -207,7 +277,7 @@ export function BuyForm({ oxxo, canceled }: { oxxo: boolean; canceled: boolean }
           />
           {buyer.buyerMembership === "miembro" && (
             <div className={s.chapter}>
-              <Field label="¿De qué capítulo?" autoComplete="off" {...b("buyerChapter")} />
+              <Field label="¿De qué capítulo?" autoComplete="off" placeholder="Ej. Pioneros" {...b("buyerChapter")} />
             </div>
           )}
         </section>
@@ -229,8 +299,17 @@ export function BuyForm({ oxxo, canceled }: { oxxo: boolean; canceled: boolean }
                 <li key={i} className={s.guest}>
                   <p className={`${s.guestN} display`}>Boleto {n}</p>
                   <div className={s.grid}>
-                    <Field label="Nombre del invitado" {...g(i, "attendeeName")} />
-                    <Field label="Correo del invitado" type="email" optional {...g(i, "attendeeEmail")} />
+                    <Field label="Nombre del invitado" placeholder="Nombre y apellido" {...g(i, "attendeeName")} />
+                    <Field
+                      label="Correo del invitado"
+                      type="email"
+                      inputMode="email"
+                      autoCapitalize="none"
+                      spellCheck={false}
+                      optional
+                      placeholder="Para enviarle su boleto"
+                      {...g(i, "attendeeEmail")}
+                    />
                   </div>
                   <MembershipPicker
                     legend="¿Es miembro de BNI?"
@@ -242,7 +321,7 @@ export function BuyForm({ oxxo, canceled }: { oxxo: boolean; canceled: boolean }
                   />
                   {guests[i].attendeeMembership === "miembro" && (
                     <div className={s.chapter}>
-                      <Field label="¿De qué capítulo?" autoComplete="off" {...g(i, "attendeeChapter")} />
+                      <Field label="¿De qué capítulo?" autoComplete="off" placeholder="Ej. Metamorfosis" {...g(i, "attendeeChapter")} />
                     </div>
                   )}
                 </li>
