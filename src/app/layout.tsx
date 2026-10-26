@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     locale: "es_MX",
     type: "website",
   },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
