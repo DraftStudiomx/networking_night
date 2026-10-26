@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const pdfFiles = ["./src/fonts/*.woff", "./node_modules/pdfkit/js/standard-fonts/**/*"];
+
 const nextConfig: NextConfig = {
   // @react-pdf/renderer ships ESM + node deps that must stay external on the server
   serverExternalPackages: ["@react-pdf/renderer"],
@@ -7,8 +9,10 @@ const nextConfig: NextConfig = {
   // Helvetica, which it loads by a computed path the tracer can't follow (on Vercel the
   // file was missing and every PDF failed with "Cannot find module …/Helvetica.cjs");
   // the fonts also require a shared chunk in standard-fonts/chunks, hence the **
+  // /admin too: its "Reenviar correo" and manual orders build PDFs in server actions
   outputFileTracingIncludes: {
-    "/api/**/*": ["./src/fonts/*.woff", "./node_modules/pdfkit/js/standard-fonts/**/*"],
+    "/api/**/*": pdfFiles,
+    "/admin": pdfFiles,
   },
 };
 
