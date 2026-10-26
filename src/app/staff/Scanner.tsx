@@ -46,7 +46,7 @@ export function Scanner() {
     if (!manual) {
       // The camera reads the same QR several times per second for as long as it stays in
       // frame. Only a new code, or the same code shown again after leaving the frame for
-      // 2.5 s, counts as a new scan, however long the server takes to answer.
+      // 2.5 s, counts as a new scan (after a slow answer the server's 20 s rule covers it).
       const now = Date.now();
       const prev = seen.current;
       seen.current = { raw, at: now };
