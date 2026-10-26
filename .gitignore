@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+.env
+.env*.local
+.vercel
+npm-debug.log*
+
+# local design workbench (decision pages, mocks, review captures)
+.impeccable/mocks/
+.impeccable/review/
+.claude/

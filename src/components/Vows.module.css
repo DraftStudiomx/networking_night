@@ -1,0 +1,5 @@
+.rings {
+  width: min(220px, 60vw);
+  height: auto;
+  overflow: visible;
+}

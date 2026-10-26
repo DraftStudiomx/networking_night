@@ -1,0 +1,138 @@
+.list {
+  --rail: 22px;
+  position: relative;
+  list-style: none;
+  width: 100%;
+  max-width: 760px;
+  margin-top: 40px;
+  text-align: left;
+}
+
+/* the rail: a hairline with the red thread drawn over it */
+.track {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: var(--rail);
+  width: 1px;
+  background: rgb(20 20 20 / 0.22);
+}
+.thread {
+  position: absolute;
+  inset: 0;
+  width: 2px;
+  left: -0.5px;
+  background: var(--red);
+  transform-origin: top;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 0 0 40px calc(var(--rail) * 2 + 18px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+.row:last-child {
+  padding-bottom: 0;
+}
+
+.knot {
+  position: absolute;
+  left: calc(var(--rail) - 15px);
+  top: 4px;
+  width: 30px;
+  height: 18px;
+  background: var(--ground);
+  box-shadow: 0 0 0 6px var(--ground);
+}
+.knot svg {
+  width: 30px;
+  height: 18px;
+  overflow: visible;
+}
+.ringA,
+.ringB {
+  fill: none;
+  stroke-width: 1.4;
+  transition: transform 0.8s var(--ease-out), stroke 0.5s var(--ease-out);
+}
+.ringA {
+  stroke: var(--ink);
+}
+.ringB {
+  stroke: var(--red);
+}
+
+.when {
+  font-size: 28px;
+  line-height: 1;
+}
+.row:last-child .when {
+  color: var(--red);
+}
+.title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  --ls: 0.28em;
+}
+.copy p {
+  margin-top: 8px;
+  color: var(--muted);
+  max-width: var(--measure);
+}
+
+/* enhanced (JS on, motion allowed): rows wait dimmed with rings apart until the thread arrives */
+.list[data-enhanced] .row:not([data-on]) {
+  opacity: 0.28;
+  transform: translateY(14px);
+}
+.list[data-enhanced] .row:not([data-on]) .ringA {
+  transform: translateX(-5px);
+  stroke: rgb(20 20 20 / 0.4);
+}
+.list[data-enhanced] .row:not([data-on]) .ringB {
+  transform: translateX(5px);
+  stroke: rgb(20 20 20 / 0.4);
+}
+
+@media (min-width: 720px) {
+  .list {
+    --rail: 50%;
+  }
+  .row {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 72px;
+    padding: 0 0 56px;
+  }
+  .knot {
+    left: calc(50% - 15px);
+  }
+  .when {
+    grid-column: 1;
+    text-align: right;
+    font-size: 40px;
+    padding-top: 2px;
+  }
+  .copy {
+    grid-column: 2;
+  }
+  /* alternate sides like a ceremony aisle */
+  .row:nth-child(odd of .row) .when {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left;
+  }
+  .row:nth-child(odd of .row) .copy {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+  }
+  .row:nth-child(odd of .row) .copy p {
+    margin-left: auto;
+  }
+}

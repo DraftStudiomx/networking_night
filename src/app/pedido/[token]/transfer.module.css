@@ -1,0 +1,106 @@
+.dialog {
+  margin: auto;
+  width: min(520px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  border: 2px solid var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: -8px;
+  background: var(--ground);
+  color: var(--ink);
+  padding: 0;
+}
+.dialog::backdrop {
+  background: rgb(20 20 20 / 0.45);
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 36px clamp(20px, 5vw, 36px) 28px;
+}
+.form h2 {
+  font-size: 28px;
+  text-align: center;
+  --ls: 0.1em;
+}
+.note {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+}
+.note strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.form label > span,
+.form legend {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+  --ls: 0.22em;
+}
+.form input:not([type="radio"]) {
+  width: 100%;
+  height: 44px;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  background: transparent;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 19px;
+  border-radius: 0;
+}
+.form input:not([type="radio"]):focus {
+  outline: none;
+  border-bottom: 2px solid var(--red);
+}
+.form fieldset {
+  border: 0;
+  min-width: 0;
+}
+.options {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--ink);
+}
+.options label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.options label:nth-child(even) {
+  border-left: 1px solid var(--ink);
+}
+.options label:nth-child(n + 3) {
+  border-top: 1px solid var(--ink);
+}
+.options input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.options label:has(input:checked) {
+  background: var(--ink);
+  color: var(--ground);
+}
+.options label:has(input:focus-visible) {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+.error {
+  color: var(--red);
+  font-size: 14px;
+  text-align: center;
+}
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}

@@ -1,0 +1,319 @@
+.form {
+  margin-top: var(--gut);
+}
+
+.body {
+  padding: clamp(52px, 8vw, 80px) clamp(20px, 6vw, 72px) 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: clamp(40px, 10vw, 72px);
+  line-height: 1;
+  --ls: 0.14em;
+}
+
+.lede {
+  margin-top: 12px;
+  max-width: 40ch;
+  text-align: center;
+  color: var(--muted);
+  text-wrap: balance;
+}
+
+.block {
+  width: 100%;
+  max-width: 680px;
+  margin-top: 44px;
+  padding-top: 28px;
+  border-top: 1px solid var(--ink);
+}
+
+.h2 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  --ls: 0.3em;
+}
+
+.hint {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* quantity */
+.stepper {
+  margin: 18px auto 0;
+  display: grid;
+  grid-template-columns: 52px 96px 52px;
+  align-items: center;
+  justify-content: center;
+}
+.stepper button {
+  height: 52px;
+  border: 1px solid var(--ink);
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+.stepper button:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--ground);
+}
+.stepper button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.stepper output {
+  text-align: center;
+  font-size: 44px;
+  line-height: 1;
+}
+
+/* fields */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px 24px;
+  margin-top: 22px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field label,
+.choice legend {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+  --ls: 0.24em;
+}
+.optional {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+.field input {
+  width: 100%;
+  height: 48px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 20px;
+  color: var(--ink);
+  transition: border-color 0.2s var(--ease-out);
+}
+.field input:focus {
+  outline: none;
+  border-bottom: 2px solid var(--red);
+}
+.field input:focus-visible {
+  outline: none;
+}
+.field[data-invalid] input {
+  border-bottom-color: var(--red);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--red);
+}
+
+/* membership choice: ruled segmented options */
+.choice {
+  margin-top: 26px;
+  border: 0;
+  min-width: 0;
+}
+.options {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 520px;
+  border: 1px solid var(--ink);
+}
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 8px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+.option:nth-child(even) {
+  border-left: 1px solid var(--ink);
+}
+.option:nth-child(n + 3) {
+  border-top: 1px solid var(--ink);
+}
+.option input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+.option:hover {
+  background: rgb(20 20 20 / 0.06);
+}
+.option:has(input:checked) {
+  background: var(--ink);
+  color: var(--ground);
+}
+.option:has(input:focus-visible) {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+.choice[data-invalid] .options {
+  border-color: var(--red);
+}
+
+.chapter {
+  max-width: 520px;
+  margin-top: 22px;
+  animation: field-in 0.45s var(--ease-out);
+}
+@keyframes field-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* checkbox */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.check input {
+  appearance: none;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.check input::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  transform: scale(0);
+  transition: transform 0.3s var(--ease-out);
+}
+.check input:checked::after {
+  transform: scale(1);
+}
+.check[data-invalid] input {
+  border-color: var(--red);
+}
+
+/* guests */
+.guests {
+  list-style: none;
+}
+.guest {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--ink);
+}
+.guestN {
+  font-size: 22px;
+  text-align: center;
+}
+.add {
+  margin-top: 28px;
+  width: 100%;
+}
+
+/* stub: total + pay */
+.stub {
+  padding: 34px clamp(20px, 6vw, 72px) clamp(32px, 5vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stub > * {
+  width: 100%;
+  max-width: 520px;
+}
+.total {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  border-block: 1px solid var(--ink);
+  text-align: center;
+}
+.total > div {
+  padding: 12px 4px;
+}
+.total > div + div {
+  border-left: 1px solid var(--ink);
+}
+.total dt {
+  font-size: 9px;
+}
+.total dd {
+  margin-top: 4px;
+  font-size: 34px;
+  line-height: 1;
+}
+.pay {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+  text-wrap: balance;
+}
+.alert {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--red);
+  color: var(--red);
+  font-size: 14px;
+  text-align: center;
+}
+.submit {
+  margin-top: 20px;
+  width: 100%;
+}
+.secure {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (min-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* name takes the full row; email and WhatsApp share the next */
+  .gridLead > :first-child {
+    grid-column: 1 / -1;
+  }
+}

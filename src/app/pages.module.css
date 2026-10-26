@@ -1,0 +1,136 @@
+.panel {
+  margin-top: var(--gut);
+  padding: clamp(56px, 9vw, 88px) clamp(22px, 6vw, 72px) clamp(44px, 7vw, 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-size: clamp(40px, 10vw, 72px);
+  line-height: 1;
+  --ls: 0.12em;
+}
+.rings {
+  width: 36px;
+  height: 22px;
+  margin: 20px 0;
+}
+.lead {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 26px;
+  line-height: 1.2;
+}
+.text {
+  margin-top: 12px;
+  max-width: 48ch;
+  color: var(--muted);
+  text-wrap: balance;
+}
+.actions {
+  margin-top: 28px;
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ticket list on the order page */
+.list {
+  list-style: none;
+  width: 100%;
+  max-width: 680px;
+  margin-top: 32px;
+  border-top: 1px solid var(--ink);
+  text-align: left;
+}
+.item {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--ink);
+}
+.itemHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.itemName {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 22px;
+  line-height: 1.2;
+}
+.code {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  white-space: nowrap;
+}
+.meta {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.itemActions {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.itemActions :global(.btn) {
+  min-height: 44px;
+  font-size: 11px;
+}
+.status {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 8px 14px;
+  border: 1px solid currentColor;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+}
+.statusPending {
+  composes: status;
+  color: var(--red);
+}
+
+/* single ticket page */
+.qr {
+  width: min(260px, 70vw);
+  height: auto;
+  margin-top: 22px;
+}
+.qr svg {
+  width: 100%;
+  height: auto;
+}
+.attendee {
+  margin-top: 18px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 28px;
+  line-height: 1.15;
+}
+
+.prose {
+  width: 100%;
+  max-width: 68ch;
+  margin-top: 28px;
+  text-align: left;
+}
+.prose h2 {
+  margin-top: 28px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+}
+.prose p,
+.prose li {
+  margin-top: 10px;
+  color: var(--muted);
+}
+.prose ul {
+  padding-left: 1.2em;
+}

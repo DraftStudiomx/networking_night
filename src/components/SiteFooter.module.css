@@ -1,0 +1,33 @@
+.foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 48px 16px 24px;
+}
+.mono {
+  width: 52px;
+  height: 52px;
+}
+.name {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  --ls: 0.3em;
+}
+.contact {
+  font-size: 14px;
+  color: var(--muted);
+}
+.contact a {
+  color: var(--ink);
+}
+.links a {
+  font-size: 13px;
+  color: var(--muted);
+}
+.links a:hover,
+.contact a:hover {
+  color: var(--red);
+}

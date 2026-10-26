@@ -1,0 +1,39 @@
+.wrap {
+  position: relative;
+}
+.wrap summary {
+  width: 100%;
+  list-style: none;
+}
+.wrap summary::-webkit-details-marker {
+  display: none;
+}
+.wrap[open] summary {
+  background: var(--ink);
+  color: var(--ground);
+}
+.menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--ink);
+  border-top: 0;
+}
+.menu a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  --ls: 0.18em;
+  transition: color 0.25s var(--ease-out);
+}
+.menu a + a {
+  border-left: 1px solid var(--ink);
+}
+.menu a:hover {
+  color: var(--red);
+}
