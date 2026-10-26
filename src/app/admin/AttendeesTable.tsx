@@ -11,6 +11,7 @@ const FILTERS = {
   pendientes: { label: "Pago pendiente", fn: (t: AdminTicket) => t.orderStatus === "pending" },
   dentro: { label: "Ya ingresaron", fn: (t: AdminTicket) => !!t.checkedInAt },
   faltan: { label: "No han llegado", fn: (t: AdminTicket) => t.orderStatus === "paid" && !t.checkedInAt },
+  correo: { label: "Correo pendiente", fn: (t: AdminTicket) => t.orderStatus === "paid" && t.email === "pending" },
 } as const;
 type Filter = keyof typeof FILTERS;
 
@@ -109,6 +110,11 @@ export function AttendeesTable({ tickets, demo }: { tickets: AdminTicket[]; demo
                     {STATUS[t.orderStatus]}
                   </span>
                   {t.method && <span className={s.sub}>{t.method === "card" ? "Tarjeta" : t.method === "oxxo" ? "OXXO" : "Manual"}</span>}
+                  {t.orderStatus === "paid" && t.email === "pending" && (
+                    <span className={s.mailPending} title={t.emailError ?? "Aún no se envía"}>
+                      Correo pendiente
+                    </span>
+                  )}
                 </td>
                 <td>{t.checkedInAt ? <span className={s.in}>Entró {hour(t.checkedInAt)}</span> : <span className={s.muted}>—</span>}</td>
                 <td>{t.orderStatus === "paid" && t.position === 1 && <Resend orderId={t.orderId} disabled={demo} />}</td>

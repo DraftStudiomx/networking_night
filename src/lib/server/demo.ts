@@ -36,11 +36,13 @@ export function demoDashboard(): Dashboard {
     buyerPhone: "477 123 4567",
     orderStatus: i === 7 ? "pending" : "paid",
     method: i === 7 ? "oxxo" : i === 9 ? "manual" : "card",
+    email: i === 4 ? "pending" : i === 9 ? "skipped" : "sent",
+    emailError: i === 4 ? "Resend: You have reached your daily email sending quota." : null,
     createdAt: new Date(now - i * 86_400_000).toISOString(),
   }));
   return {
     tickets,
-    stats: { sold: 9, orders: 9, gross: 5400, net: 5143, pendingOxxo: 1, checkedIn: 3, members: 7, guests: 2 },
+    stats: { sold: 9, orders: 9, gross: 5400, net: 5143, pendingOxxo: 1, checkedIn: 3, emailPending: 1, members: 7, guests: 2 },
     chapters: [
       { label: "Pioneros", count: 3 },
       { label: "Metamorfosis", count: 2 },

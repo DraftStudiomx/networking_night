@@ -3,12 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireStaff } from "@/lib/server/auth";
-import { db, type TicketRow } from "@/lib/server/db";
+import { db } from "@/lib/server/db";
 import { EVENT } from "@/lib/event";
-import { orderAccessToken, orderUrl, ticketCode } from "@/lib/server/tokens";
-import { ticketsPdf } from "@/lib/server/pdf";
-import { sendOrderConfirmed } from "@/lib/server/email";
-import { toPdfTicket } from "@/lib/server/fulfill";
+import { orderAccessToken, ticketCode } from "@/lib/server/tokens";
+import { markEmail, sendOrderEmail } from "@/lib/server/fulfill";
 
 export async function setSalesOpen(open: boolean) {
   await requireStaff("admin", "/admin");
@@ -16,31 +14,14 @@ export async function setSalesOpen(open: boolean) {
   revalidatePath("/admin");
 }
 
-async function emailOrder(orderId: string) {
-  const { data: order } = await db()
-    .from("orders")
-    .select("access_token, buyer_name, buyer_email, total_mxn")
-    .eq("id", orderId)
-    .single();
-  const { data } = await db().from("tickets").select("*").eq("order_id", orderId).eq("status", "valid").order("position");
-  const list = (data ?? []) as TicketRow[];
-  if (!order || list.length === 0) throw new Error("Pedido sin boletos válidos.");
-  await sendOrderConfirmed({
-    to: order.buyer_email,
-    buyerName: order.buyer_name,
-    orderUrl: orderUrl(order.access_token),
-    tickets: list.map((t) => ({ attendeeName: t.attendee_name, code: t.code })),
-    totalMXN: order.total_mxn,
-    pdf: await ticketsPdf(list.map((t) => toPdfTicket(t, list.length))),
-  });
-}
-
 export async function resendOrderEmail(orderId: string): Promise<{ ok?: boolean; error?: string }> {
   await requireStaff("admin", "/admin");
   try {
-    await emailOrder(orderId);
+    await sendOrderEmail(orderId);
+    revalidatePath("/admin");
     return { ok: true };
   } catch (e) {
+    revalidatePath("/admin");
     return { error: e instanceof Error ? e.message : "No se pudo reenviar." };
   }
 }
@@ -115,11 +96,13 @@ export async function createManualOrder(_: ManualState, form: FormData): Promise
   let mailed = "";
   if (m.sendEmail) {
     try {
-      await emailOrder(order.id);
+      await sendOrderEmail(order.id);
       mailed = " y se envió el correo";
     } catch {
-      mailed = ", pero el correo no se pudo enviar";
+      mailed = ", pero el correo no se pudo enviar (queda como pendiente)";
     }
+  } else {
+    await markEmail(order.id, "skipped");
   }
   revalidatePath("/admin");
   return { ok: `Se crearon ${m.quantity} ${m.quantity === 1 ? "boleto" : "boletos"}${mailed}.` };

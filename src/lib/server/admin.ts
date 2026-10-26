@@ -19,6 +19,9 @@ export type AdminTicket = {
   buyerPhone: string;
   orderStatus: "pending" | "paid" | "expired" | "canceled";
   method: string | null;
+  /** the order's ticket email: "pending" until it is sent (or skipped on a manual order) */
+  email: "sent" | "pending" | "skipped";
+  emailError: string | null;
   createdAt: string;
 };
 
@@ -48,7 +51,9 @@ export async function loadDashboard() {
   const [{ data: orders }, { data: tickets }, { data: dupes }, { data: setting }] = await Promise.all([
     db()
       .from("orders")
-      .select("id, buyer_name, buyer_email, buyer_phone, status, payment_method, total_mxn, quantity, created_at"),
+      .select(
+        "id, buyer_name, buyer_email, buyer_phone, status, payment_method, total_mxn, quantity, created_at, email_status, email_error",
+      ),
     db()
       .from("tickets")
       .select(
@@ -80,6 +85,8 @@ export async function loadDashboard() {
         buyerPhone: o.buyer_phone,
         orderStatus: o.status,
         method: o.payment_method,
+        email: o.email_status === "sent" || o.email_status === "skipped" ? o.email_status : "pending",
+        emailError: o.email_error,
         createdAt: o.created_at,
       },
     ];
@@ -117,6 +124,7 @@ export async function loadDashboard() {
       net: Math.round(gross - fees),
       pendingOxxo: (orders ?? []).filter((o) => o.status === "pending").reduce((n, o) => n + o.quantity, 0),
       checkedIn: paid.filter((t) => t.checkedInAt).length,
+      emailPending: paidOrders.filter((o) => o.email_status !== "sent" && o.email_status !== "skipped").length,
       members: paid.filter((t) => t.membership === "miembro").length,
       guests: paid.filter((t) => t.membership === "invitado").length,
     },

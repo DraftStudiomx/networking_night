@@ -7,6 +7,14 @@ import { config, need } from "./config";
 let client: Resend | null = null;
 const resend = () => (client ??= new Resend(need(config.resendKey, "El correo")));
 
+// Resend reports a rejected email (daily limit, bad address) in `error` instead of
+// throwing; turn that into an exception so callers never count it as sent.
+async function send(email: Parameters<ReturnType<typeof resend>["emails"]["send"]>[0]) {
+  const { data, error } = await resend().emails.send(email);
+  if (error) throw new Error(`Resend: ${error.message}`);
+  return data;
+}
+
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
 // Table-based layout: email clients ignore most modern CSS.
@@ -58,7 +66,7 @@ export async function sendOrderConfirmed(o: {
 <tr><td align="center" style="padding:20px 28px 28px">${button(o.orderUrl, "Ver mis boletos")}
 <p style="margin:14px 0 0;font:13px/1.5 Arial,sans-serif;color:#5E5F62">Desde ese enlace puedes cambiar el nombre de un invitado si ya no puede asistir.</p></td></tr>`);
 
-  return resend().emails.send({
+  return send({
     from: config.emailFrom,
     to: o.to,
     subject: o.tickets.length > 1 ? `Tus ${o.tickets.length} boletos · Networking Night` : "Tu boleto · Networking Night",
@@ -123,7 +131,7 @@ export async function sendTicketToAttendee(o: {
 </td></tr>
 <tr><td align="center" style="padding:20px 28px 28px">${button(o.ticketUrl, "Ver mi boleto")}</td></tr>`);
 
-  return resend().emails.send({
+  return send({
     from: config.emailFrom,
     to: o.to,
     subject: "Tu boleto · Networking Night",

@@ -373,6 +373,14 @@
 .pill[data-tone="canceled"] {
   color: var(--muted);
 }
+.mailPending {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--red);
+  white-space: nowrap;
+}
 .in {
   color: var(--ok);
   font-weight: 600;

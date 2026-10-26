@@ -54,6 +54,14 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
           </div>
         </dl>
 
+        {stats.emailPending > 0 && (
+          <p className={s.alert} role="status">
+            {stats.emailPending === 1 ? "1 compra no ha recibido" : `${stats.emailPending} compras no han recibido`} el correo
+            con sus boletos. Se reintenta solo cada mañana; para mandarlo ya, filtra por «Correo pendiente» y usa
+            «Reenviar correo». Sus boletos funcionan igual en la entrada.
+          </p>
+        )}
+
         <div className={s.columns}>
           <section className={s.panel} aria-labelledby="desglose-t">
             <h2 id="desglose-t" className={`${s.h2} tr`}>Asistentes por capítulo</h2>
