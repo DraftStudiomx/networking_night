@@ -5,9 +5,10 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["@react-pdf/renderer"],
   // the PDF renderer reads these from disk at runtime: our fonts, and pdfkit's built-in
   // Helvetica, which it loads by a computed path the tracer can't follow (on Vercel the
-  // file was missing and every PDF failed with "Cannot find module …/Helvetica.cjs")
+  // file was missing and every PDF failed with "Cannot find module …/Helvetica.cjs");
+  // the fonts also require a shared chunk in standard-fonts/chunks, hence the **
   outputFileTracingIncludes: {
-    "/api/**/*": ["./src/fonts/*.woff", "./node_modules/pdfkit/js/standard-fonts/*.cjs"],
+    "/api/**/*": ["./src/fonts/*.woff", "./node_modules/pdfkit/js/standard-fonts/**/*"],
   },
 };
 
