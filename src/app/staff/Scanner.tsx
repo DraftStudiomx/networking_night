@@ -40,6 +40,9 @@ export function Scanner() {
   const [found, setFound] = useState<Found[]>([]);
 
   const submit = useCallback(async (raw: string, manual = false) => {
+    // While one ticket is being checked, other reads are dropped without being remembered,
+    // so a second ticket held up meanwhile is picked up as soon as the first one finishes.
+    if (busy.current) return;
     if (!manual) {
       // The camera reads the same QR several times per second for as long as it stays in
       // frame. Only a new code, or the same code shown again after leaving the frame for
@@ -49,7 +52,6 @@ export function Scanner() {
       seen.current = { raw, at: now };
       if (prev && prev.raw === raw && now - prev.at < 2500) return;
     }
-    if (busy.current) return;
     busy.current = true;
     try {
       const r = await fetch("/api/staff/scan", {
