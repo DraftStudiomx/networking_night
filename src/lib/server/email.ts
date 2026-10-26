@@ -62,6 +62,45 @@ export async function sendOrderConfirmed(o: {
   });
 }
 
+export type Reminder = {
+  to: string;
+  name: string;
+  /** the buyer's order page, or the attendee's own ticket page */
+  url: string;
+  tickets: { attendeeName: string; code: string }[];
+};
+
+/** Pre-event reminder. Built here and sent in one batch call by the reminders cron. */
+export function reminderEmail(r: Reminder) {
+  const many = r.tickets.length > 1;
+  const rows = r.tickets
+    .map(
+      (t) =>
+        `<tr><td style="padding:10px 0;border-bottom:1px solid #141414;font:16px Georgia,serif">${esc(t.attendeeName)}</td><td align="right" style="padding:10px 0;border-bottom:1px solid #141414;font:600 12px Arial,sans-serif;letter-spacing:2px">${t.code}</td></tr>`,
+    )
+    .join("");
+  const html = shell(`
+<tr><td style="padding:24px 28px 8px;font:16px/1.6 Arial,sans-serif">
+<p style="margin:0 0 12px">Hola, ${esc(r.name.split(" ")[0])}:</p>
+<p style="margin:0 0 16px">Ya casi. Este <strong>${EVENT.dateLong.toLowerCase()}</strong> Pioneros y Metamorfosis se dan el sí, y ${many ? "ustedes están" : "tú estás"} en la lista.</p>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-top:1px solid #141414">${rows}</table>
+<p style="margin:18px 0 6px;font:600 11px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase">Para la entrada</p>
+<p style="margin:0">Llega a partir de las ${EVENT.dateLabel.time}, con etiqueta formal. En la puerta escaneamos el código QR de cada boleto, desde el celular o impreso.${
+    many ? " Cada invitado necesita el suyo: compárteselo desde tu enlace o lleguen juntos." : ""
+  }</p>
+</td></tr>
+<tr><td align="center" style="padding:20px 28px 28px">${button(r.url, many ? "Ver mis boletos" : "Ver mi boleto")}</td></tr>`);
+
+  return {
+    from: config.emailFrom,
+    to: r.to,
+    subject: "Nos vemos el sábado · Networking Night",
+    html,
+  };
+}
+
+export const sendReminders = (list: Reminder[]) => resend().batch.send(list.map(reminderEmail));
+
 export async function sendTicketToAttendee(o: {
   to: string;
   attendeeName: string;

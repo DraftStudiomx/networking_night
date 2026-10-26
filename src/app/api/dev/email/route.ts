@@ -1,5 +1,5 @@
 import { ticketsPdf } from "@/lib/server/pdf";
-import { sendOrderConfirmed } from "@/lib/server/email";
+import { sendOrderConfirmed, sendReminders } from "@/lib/server/email";
 
 export const runtime = "nodejs";
 
@@ -14,6 +14,13 @@ export async function GET(req: Request) {
     { code: "NN-8HXR2M", version: 1, position: 2, total: 2, attendeeName: "María Fernanda López", membership: "invitado" as const },
   ];
   try {
+    // ?kind=recordatorio sends the pre-event reminder instead
+    if (new URL(req.url).searchParams.get("kind") === "recordatorio") {
+      const res = await sendReminders([
+        { to, name: "Invitado de ejemplo", url: "http://localhost:3000/pedido/ejemplo", tickets },
+      ]);
+      return Response.json(res);
+    }
     const res = await sendOrderConfirmed({
       to,
       buyerName: "Invitado de ejemplo",

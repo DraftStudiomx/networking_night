@@ -35,6 +35,13 @@ Sin llaves de Supabase/Stripe el landing funciona y la compra responde "La venta
 6. **Supabase sin pausas:** el plan gratis pausa un proyecto tras 7 días sin consultas. `vercel.json` programa
    `/api/cron/keepalive` una vez al día (9:00 am de León) para evitarlo. Solo agrega `CRON_SECRET` en las variables de Vercel.
 
+7. **Recordatorios:** `/api/cron/reminders` corre del 24 al 27 de noviembre a las 10:00 am de León y manda
+   hasta 60 correos por día (Resend gratis permite 100 al día, contando los de compra; ajustable con `REMINDER_BATCH`).
+   Cada dirección recibe uno solo: el invitado con correo propio recibe su boleto y el comprador el resto de su compra.
+   Los ya enviados quedan en `settings.reminders_sent`. Para ensayar en local:
+   `curl -H "Authorization: Bearer $CRON_SECRET" "http://localhost:3000/api/cron/reminders?now=2026-11-24T10:00:00-06:00"`.
+   Vista previa del correo: `/api/dev/email?to=tu@correo&kind=recordatorio`.
+
 ## Después del evento
 
 1. Descarga los asistentes desde el panel (**Exportar a Excel**) y, si quieres un respaldo completo, en Supabase:

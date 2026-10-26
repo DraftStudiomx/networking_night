@@ -1,7 +1,7 @@
 import "server-only";
 import path from "node:path";
 import QRCode from "qrcode";
-import { Document, Font, G, Image, Page, Path, Circle, Line, Svg, Text, View, renderToBuffer, StyleSheet } from "@react-pdf/renderer";
+import { Document, Font, G, Image, Link, Page, Path, Circle, Line, Svg, Text, View, renderToBuffer, StyleSheet } from "@react-pdf/renderer";
 import { EVENT, memberLine, type Membership } from "../event";
 import { ticketUrl } from "./tokens";
 
@@ -26,9 +26,9 @@ const PAGE = "#E9E7E1";
 // Ticket geometry (points). The ticket sits on a page-coloured margin so its frame
 // never touches the edge of the PDF viewer.
 const W = 300;
-const H = 560;
+const H = 522;
 const R = 22;
-const TEAR = 452;
+const TEAR = 436;
 const M = 24;
 const PW = W + M * 2;
 const PH = H + M * 2;
@@ -54,7 +54,10 @@ const st = StyleSheet.create({
   cellSep: { borderLeftWidth: 0.75, borderColor: INK },
   cellLabel: { fontSize: 5.5, fontWeight: 600, letterSpacing: 1.4, color: MUTED, textTransform: "uppercase" },
   cellValue: { fontFamily: "Forum", fontSize: 12, marginTop: 3, textTransform: "uppercase" },
-  venue: { fontSize: 7, fontWeight: 600, letterSpacing: 1.6, marginTop: 8, textTransform: "uppercase" },
+  venueLink: { alignItems: "center", marginTop: 9, color: INK, textDecoration: "none" },
+  venue: { fontSize: 7, fontWeight: 600, letterSpacing: 1.6, textTransform: "uppercase" },
+  address: { fontSize: 6.5, color: MUTED, marginTop: 4, textAlign: "center" },
+  directions: { fontSize: 6, fontWeight: 600, letterSpacing: 1.4, color: RED, marginTop: 5, textTransform: "uppercase", textDecoration: "underline" },
   stub: { position: "absolute", top: TEAR + 16, left: 24, right: 24, alignItems: "center" },
   admit: { fontSize: 6.5, fontWeight: 600, letterSpacing: 2.6, color: MUTED, textTransform: "uppercase" },
   pos: { fontFamily: "Forum", fontSize: 16, marginTop: 8 },
@@ -113,7 +116,11 @@ function TicketPage({ t, qr }: { t: PdfTicket; qr: string }) {
               <Text style={st.cellValue}>{EVENT.dateLabel.dress}</Text>
             </View>
           </View>
-          <Text style={st.venue}>{EVENT.venue.name}</Text>
+          <Link src={EVENT.venue.mapUrl} style={st.venueLink}>
+            <Text style={st.venue}>{EVENT.venue.name}</Text>
+            <Text style={st.address}>{EVENT.venue.address}</Text>
+            <Text style={st.directions}>Cómo llegar ›</Text>
+          </Link>
         </View>
 
         <View style={st.stub}>
