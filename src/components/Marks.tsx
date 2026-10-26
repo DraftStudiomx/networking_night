@@ -1,4 +1,5 @@
 // Authored brand marks: BNI wordmark, P&M monogram seal, interlocked rings.
+import { DRAFT_STUDIO } from "@/lib/draftstudio";
 
 type SvgProps = { className?: string; title?: string };
 
@@ -51,5 +52,20 @@ export function ChapterLogo({ name, className }: { name: string; className?: str
       <BniWordmark className="chapter-logo__mark" title={`BNI ${name}`} />
       <span className="chapter-logo__name" aria-hidden="true">{name}</span>
     </span>
+  );
+}
+
+/** Draft Studio logo (the studio that built the site), in the current text colour. */
+export function DraftStudioLogo({ className, title = DRAFT_STUDIO.name }: SvgProps) {
+  return (
+    <svg className={className} viewBox={DRAFT_STUDIO.viewBox} role="img" aria-label={title}>
+      <g fill="none" stroke="currentColor" strokeLinecap="square">
+        {DRAFT_STUDIO.corners.map((d) => (
+          <path key={d} d={d} strokeWidth="2.2" />
+        ))}
+        <path d={DRAFT_STUDIO.mark} strokeWidth="2.6" />
+      </g>
+      <path d={DRAFT_STUDIO.wordmark} fill="currentColor" />
+    </svg>
   );
 }

@@ -1,6 +1,7 @@
 import "server-only";
 import { Resend } from "resend";
 import { EVENT, formatMXN } from "../event";
+import { draftStudioUrl } from "../draftstudio";
 import { config, need } from "./config";
 
 let client: Resend | null = null;
@@ -23,6 +24,10 @@ ${inner}
 ${EVENT.dateLong} · 4:00 pm<br>${EVENT.venue.name}, ${EVENT.venue.city}<br>
 <a href="${EVENT.venue.mapUrl}" style="color:#141414">Cómo llegar</a> · Valet parking incluido · Etiqueta formal<br><br>
 ¿Dudas? Escríbenos a <a href="mailto:${EVENT.contactEmail}" style="color:#141414">${EVENT.contactEmail}</a>
+</td></tr>
+<tr><td align="center" style="padding:0 28px 28px;font:600 10px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#5E5F62">
+<a href="${draftStudioUrl("correo")}" style="color:#5E5F62;text-decoration:none">Boletos digitales por<br>
+<img src="${config.siteUrl}/draftstudio.png" width="112" height="28" alt="Draft Studio" style="display:inline-block;margin-top:6px;border:0"></a>
 </td></tr></table></td></tr></table></body></html>`;
 }
 

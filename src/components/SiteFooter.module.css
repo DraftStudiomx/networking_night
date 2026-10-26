@@ -27,6 +27,31 @@
   font-size: 13px;
   color: var(--muted);
 }
+.credit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  width: min(220px, 100%);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--muted);
+  text-decoration: none;
+}
+.creditLogo {
+  width: 104px;
+  height: auto;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.credit:hover .creditLogo {
+  color: var(--ink);
+}
 .links a:hover,
 .contact a:hover {
   color: var(--red);

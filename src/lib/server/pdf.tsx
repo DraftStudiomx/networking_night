@@ -3,6 +3,7 @@ import path from "node:path";
 import QRCode from "qrcode";
 import { Document, Font, G, Image, Link, Page, Path, Circle, Line, Svg, Text, View, renderToBuffer, StyleSheet } from "@react-pdf/renderer";
 import { EVENT, memberLine, type Membership } from "../event";
+import { DRAFT_STUDIO, draftStudioUrl } from "../draftstudio";
 import { ticketUrl } from "./tokens";
 
 const fontDir = path.join(process.cwd(), "src", "fonts");
@@ -26,7 +27,7 @@ const PAGE = "#E9E7E1";
 // Ticket geometry (points). The ticket sits on a page-coloured margin so its frame
 // never touches the edge of the PDF viewer.
 const W = 300;
-const H = 522;
+const H = 530;
 const R = 22;
 const TEAR = 436;
 const M = 24;
@@ -62,6 +63,8 @@ const st = StyleSheet.create({
   admit: { fontSize: 6.5, fontWeight: 600, letterSpacing: 2.6, color: MUTED, textTransform: "uppercase" },
   pos: { fontFamily: "Forum", fontSize: 16, marginTop: 8 },
   fine: { fontSize: 6, color: MUTED, marginTop: 6, textAlign: "center" },
+  credit: { flexDirection: "row", alignItems: "center", marginTop: 9, textDecoration: "none" },
+  creditText: { fontSize: 4.5, fontWeight: 600, letterSpacing: 1.1, color: MUTED, textTransform: "uppercase", marginRight: 4 },
 });
 
 export type PdfTicket = {
@@ -129,6 +132,16 @@ function TicketPage({ t, qr }: { t: PdfTicket; qr: string }) {
             Boleto {t.position} de {t.total}
           </Text>
           <Text style={st.fine}>No reembolsable · Transferible desde el enlace de tu compra</Text>
+          <Link src={draftStudioUrl("pdf")} style={st.credit}>
+            <Text style={st.creditText}>Boletos digitales por</Text>
+            <Svg width={38} height={38 / DRAFT_STUDIO.ratio} viewBox={DRAFT_STUDIO.viewBox}>
+              {DRAFT_STUDIO.corners.map((d) => (
+                <Path key={d} d={d} stroke={MUTED} strokeWidth={2.2} fill="none" />
+              ))}
+              <Path d={DRAFT_STUDIO.mark} stroke={MUTED} strokeWidth={2.6} fill="none" />
+              <Path d={DRAFT_STUDIO.wordmark} fill={MUTED} />
+            </Svg>
+          </Link>
         </View>
       </View>
     </Page>

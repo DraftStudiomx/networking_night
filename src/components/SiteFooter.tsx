@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { EVENT } from "@/lib/event";
-import { Monogram } from "./Marks";
+import { draftStudioUrl } from "@/lib/draftstudio";
+import { DraftStudioLogo, Monogram } from "./Marks";
 import s from "./SiteFooter.module.css";
 
 export function SiteFooter() {
@@ -14,6 +15,10 @@ export function SiteFooter() {
       <nav className={s.links} aria-label="Legal">
         <Link href="/aviso-de-privacidad">Aviso de privacidad</Link>
       </nav>
+      <a href={draftStudioUrl("pie")} target="_blank" rel="noopener" className={s.credit}>
+        <span>Diseño y desarrollo</span>
+        <DraftStudioLogo className={s.creditLogo} />
+      </a>
     </footer>
   );
 }

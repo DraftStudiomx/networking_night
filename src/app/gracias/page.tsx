@@ -3,7 +3,8 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Ticket } from "@/components/Ticket";
-import { Rings } from "@/components/Marks";
+import { DraftStudioLogo, Rings } from "@/components/Marks";
+import { draftStudioUrl } from "@/lib/draftstudio";
 import s from "../pages.module.css";
 
 export const metadata: Metadata = { title: "¡Gracias! · Networking Night" };
@@ -33,6 +34,17 @@ export default async function Gracias({ searchParams }: { searchParams: Promise<
             </Link>
           </div>
         </Ticket>
+
+        <aside className={s.credit} aria-label="Quién hizo este sitio">
+          <DraftStudioLogo className={s.creditLogo} />
+          <p>
+            ¿Te gustó comprar aquí? Este sitio, los boletos y el escáner de la entrada los hicimos en{" "}
+            <strong>Draft Studio</strong>. Hacemos sitios y sistemas a la medida para negocios en todo el mundo.
+          </p>
+          <a href={draftStudioUrl("gracias")} target="_blank" rel="noopener" className={s.creditLink}>
+            Conócenos <span aria-hidden="true">→</span>
+          </a>
+        </aside>
       </main>
       <SiteFooter />
     </>
