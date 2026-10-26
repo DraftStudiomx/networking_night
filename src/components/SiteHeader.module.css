@@ -1,4 +1,8 @@
 .bar {
+  /* stays in view while the page scrolls */
+  position: sticky;
+  top: var(--gut);
+  z-index: 50;
   display: grid;
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
@@ -52,13 +56,20 @@
   place-items: center;
   transition: background-color 0.25s var(--ease-out);
 }
-.menu:hover {
-  background: var(--ink);
-}
-.menu:hover .burger,
-.menu:hover .burger::before,
-.menu:hover .burger::after {
-  background: var(--ground);
+/* hover only where there is a real pointer: on phones a tap leaves :hover stuck,
+   which painted the open menu's close button as a solid black square */
+@media (hover: hover) {
+  .menu:hover {
+    background: var(--ink);
+  }
+  .menu:hover .burger,
+  .menu:hover .burger::before,
+  .menu:hover .burger::after {
+    background: var(--ground);
+  }
+  .menu:hover .burger[data-open="true"] {
+    background: transparent;
+  }
 }
 
 .burger,

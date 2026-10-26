@@ -5,9 +5,10 @@ import s from "./Intro.module.css";
 
 const KEY = "nn-intro-seen";
 
-// Runs before the overlay is parsed (no flash): plays the intro on the first visit of the
-// session and skips it on reloads, on returns from checkout and under reduced motion.
-const decide = `(function(){var d=document.documentElement;try{if(sessionStorage.getItem("${KEY}")||matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.intro="skip"}else{sessionStorage.setItem("${KEY}","1");d.dataset.intro="play"}}catch(e){d.dataset.intro="play"}})();`;
+// Runs before the overlay is parsed (no flash): plays the intro only on a visitor's first
+// visit on this device (localStorage, so new tabs and reopened links skip it too) and
+// never under reduced motion. If storage is blocked it skips rather than replaying.
+const decide = `(function(){var d=document.documentElement;try{if(localStorage.getItem("${KEY}")||matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.intro="skip"}else{localStorage.setItem("${KEY}","1");d.dataset.intro="play"}}catch(e){d.dataset.intro="skip"}})();`;
 
 /**
  * Opening curtain: the black and red rings draw themselves, slide together and interlock,

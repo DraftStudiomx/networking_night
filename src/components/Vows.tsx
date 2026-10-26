@@ -18,16 +18,28 @@ export function Vows() {
       fill="none"
       stroke={color}
       strokeWidth={2.2}
-      initial={reduce ? false : { x: from, pathLength: 0 }}
-      whileInView={{ x: 0, pathLength: 1 }}
-      viewport={{ once: true, amount: 0.8 }}
-      transition={{ x: { duration: 1.4, ease, delay: delay + 0.5 }, pathLength: { duration: 1.1, ease, delay } }}
+      variants={{
+        apart: { x: from, pathLength: 0 },
+        together: {
+          x: 0,
+          pathLength: 1,
+          transition: { x: { duration: 1.4, ease, delay: delay + 0.5 }, pathLength: { duration: 1.1, ease, delay } },
+        },
+      }}
     />
   );
+  // The svg is what gets watched: observing the circles themselves never fired on phones.
   return (
-    <svg className={s.rings} viewBox="0 0 220 120" aria-hidden="true">
+    <motion.svg
+      className={s.rings}
+      viewBox="0 0 220 120"
+      aria-hidden="true"
+      initial={reduce ? false : "apart"}
+      whileInView="together"
+      viewport={{ once: true, amount: 0.6 }}
+    >
       {ring(84, -34, "var(--ink)", 0)}
       {ring(136, 34, "var(--red)", 0.15)}
-    </svg>
+    </motion.svg>
   );
 }
