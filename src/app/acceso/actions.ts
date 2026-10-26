@@ -1,8 +1,16 @@
 "use server";
 
 import { z } from "zod";
-import { authClient, isAllowedEmail } from "@/lib/server/auth";
-import { config, NotConfiguredError } from "@/lib/server/config";
+import { createClient } from "@supabase/supabase-js";
+import { isAllowedEmail } from "@/lib/server/auth";
+import { config, need, NotConfiguredError } from "@/lib/server/config";
+
+// Implicit flow (not PKCE): the emailed link carries the session itself, so it works on
+// whatever device opens it, not only in the browser that asked for it.
+const linkSender = () =>
+  createClient(need(config.supabaseUrl, "Supabase"), need(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, "Supabase"), {
+    auth: { flowType: "implicit", persistSession: false, autoRefreshToken: false },
+  });
 
 export type LoginState = { ok?: boolean; error?: string };
 
@@ -15,7 +23,7 @@ export async function sendMagicLink(_: LoginState, form: FormData): Promise<Logi
     // Same answer whether or not the address is on the list, so the form can't be used
     // to discover who the organizers are.
     if (!(await isAllowedEmail(email.data))) return { ok: true };
-    const { error } = await (await authClient()).auth.signInWithOtp({
+    const { error } = await linkSender().auth.signInWithOtp({
       email: email.data,
       options: {
         shouldCreateUser: true,
