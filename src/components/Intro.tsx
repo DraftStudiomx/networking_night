@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import s from "./Intro.module.css";
 
 const KEY = "nn-intro-seen";
@@ -17,12 +17,14 @@ const decide = `(function(){var d=document.documentElement;try{if(sessionStorage
  */
 export function Intro() {
   const ref = useRef<HTMLDivElement>(null);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const done = () => el.remove();
-    el.addEventListener("animationend", (e) => e.target === el && done());
+    // unmount through React: removing the node by hand makes React's own removal crash
+    // when the visitor navigates away (client-side) from the home page
+    el.addEventListener("animationend", (e) => e.target === el && setDone(true));
     // tap or key skips straight to the page
     const skip = () => el.classList.add(s.skip);
     el.addEventListener("click", skip);
@@ -33,19 +35,21 @@ export function Intro() {
   return (
     <>
       <script dangerouslySetInnerHTML={{ __html: decide }} />
-      <div ref={ref} className={s.curtain} aria-hidden="true">
-        <div className={s.stage}>
-          <svg className={s.rings} viewBox="0 0 220 120">
-            <circle className={s.ringA} cx="84" cy="60" r="44" pathLength={1} />
-            <circle className={s.ringB} cx="136" cy="60" r="44" pathLength={1} />
-          </svg>
-          <p className={`${s.title} display`}>Networking Night</p>
-          <p className={s.sub}>
-            <span>Wedding fake</span>
-          </p>
+      {!done && (
+        <div ref={ref} className={s.curtain} aria-hidden="true">
+          <div className={s.stage}>
+            <svg className={s.rings} viewBox="0 0 220 120">
+              <circle className={s.ringA} cx="84" cy="60" r="44" pathLength={1} />
+              <circle className={s.ringB} cx="136" cy="60" r="44" pathLength={1} />
+            </svg>
+            <p className={`${s.title} display`}>Networking Night</p>
+            <p className={s.sub}>
+              <span>Wedding fake</span>
+            </p>
+          </div>
+          <span className={s.edge} />
         </div>
-        <span className={s.edge} />
-      </div>
+      )}
     </>
   );
 }
