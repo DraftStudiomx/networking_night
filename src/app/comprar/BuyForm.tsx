@@ -277,7 +277,7 @@ export function BuyForm({ oxxo, canceled }: { oxxo: boolean; canceled: boolean }
           />
           {buyer.buyerMembership === "miembro" && (
             <div className={s.chapter}>
-              <Field label="¿De qué capítulo?" autoComplete="off" placeholder="Ej. Pioneros" {...b("buyerChapter")} />
+              <Field label="¿De qué capítulo?" autoComplete="off" placeholder="Ej. Metamorfosis" {...b("buyerChapter")} />
             </div>
           )}
         </section>
