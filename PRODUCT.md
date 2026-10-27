@@ -39,7 +39,7 @@ Es la "boda" entre **Pioneros**, el primer capítulo de BNI en todo México (20 
 - Máximo 10 boletos por compra; nombre obligatorio por asistente; OXXO con ficha de 24 h, solo hasta el 26 de noviembre; venta con tarjeta abierta hasta el día del evento.
 - Membresía en el formulario: miembro de BNI (con el nombre de su capítulo) o no miembro.
 - La venta no tiene límite de boletos (el salón tiene mobiliario para 200, solo como referencia interna).
-- El boleto incluye: cena taquiza, mesa de postres, brindis, DJ, barra fría, valet y entrega de reconocimientos (detalle en PLANEACION.md).
+- El boleto incluye: cena taquiza, brindis, DJ, barra fría, valet y entrega de reconocimientos (detalle en PLANEACION.md).
 - Al referirse a Metamorfosis: "el capítulo más joven de León". **Nunca mencionar su antigüedad en años o meses.**
 - Por definir: agenda, quiénes son los "novios", padrinos, fotos, fecha de cierre de la venta.
 

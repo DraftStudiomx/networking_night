@@ -184,7 +184,7 @@ export default function Home() {
           <h3 className={`${s.h3center} tr`}>Tu boleto incluye</h3>
           <ul className={s.includes}>
             {INCLUDES.map((it) => (
-              <li key={it.title}>
+              <li key={it.title} data-soon={it.soon || undefined}>
                 <strong>{it.title}</strong>
                 <span className="muted">{it.text}</span>
               </li>

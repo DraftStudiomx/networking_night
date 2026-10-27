@@ -38,11 +38,11 @@ de evento** (no una invitación de boda literal) con lenguaje y estética de bod
 - **Barra fría** por 6 horas: refrescos, agua mineral y hielo.
 - 7 meseros y carpa exterior.
 - **Brindis** para todos.
-- **Cena estilo taquiza** y **mesa de postres**.
+- **Cena estilo taquiza**. (La mesa de postres se quitó el 27 oct 2026; la sustituye algo por definir.)
 - **Entrega de reconocimientos** a miembros destacados.
 - Más sorpresas y dinámicas (detalles por definir).
 
-> Para el sitio se redacta como experiencia ("cena taquiza, mesa de postres, brindis, DJ, barra fría, valet"), no como lista de proveedor.
+> Para el sitio se redacta como experiencia ("cena taquiza, brindis, DJ, barra fría, valet"), no como lista de proveedor.
 
 ---
 
@@ -54,7 +54,7 @@ de evento** (no una invitación de boda literal) con lenguaje y estética de bod
    - Metamorfosis: https://metamorfosis.draftstudio.mx/
 3. **Nuestra historia**: línea de tiempo (ver sección 3).
 4. **La recepción**: fecha, hora, dirección, mapa, valet y botón "Agregar al calendario".
-5. **Qué incluye**: cena taquiza, mesa de postres, brindis, DJ, barra fría, valet, reconocimientos.
+5. **Qué incluye**: cena taquiza, brindis, DJ, barra fría, valet, reconocimientos.
 6. **Programa**: por definir. Mientras tanto, la sección no se muestra o dice "Programa próximamente".
 7. **Código de vestimenta**: formal de boda.
 8. **Mesa de regalos**: en lugar de regalos, cada capítulo comparte su **referencia ideal** y los **aliados que busca**. El mejor regalo es conectar a un novio con alguien de tu red. Contenido por definir (ver radar).

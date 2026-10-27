@@ -380,6 +380,10 @@
   font-size: 14px;
   line-height: 1.45;
 }
+/* the slot reserved for an item still to be announced */
+.includes li[data-soon] strong {
+  color: var(--red);
+}
 
 /* ---------- la boda ---------- */
 .vowsTable {

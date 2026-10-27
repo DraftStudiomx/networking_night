@@ -92,19 +92,21 @@ export const WEDDING_VOWS = [
   ["El brindis", "Por 20 años haciendo negocios"],
 ] as const;
 
-export const INCLUDES = [
+// The "soon" slot holds the place of an item still being defined, so the grid stays even;
+// replace it with the real item once it's confirmed.
+export const INCLUDES: readonly { title: string; text: string; soon?: boolean }[] = [
   { title: "Taquiza de guisados", text: "La cena de la boda, para todos los invitados." },
-  { title: "Mesa de postres", text: "El dulce final de la noche." },
+  { title: "Por anunciar", text: "Una sorpresa más que te contaremos muy pronto.", soon: true },
   { title: "Brindis", text: "Para todos los invitados." },
   { title: "DJ", text: "Cinco horas de música." },
   { title: "Barra fría", text: "Refrescos, agua mineral y hielo durante seis horas." },
   { title: "Reconocimientos", text: "A los miembros destacados de los capítulos." },
-] as const;
+];
 
 export const FAQ = [
   {
     q: "¿Qué incluye mi boleto?",
-    a: "Taquiza de guisados, mesa de postres, brindis, DJ, barra fría con refrescos y agua mineral, y la entrega de reconocimientos. Además, el salón cuenta con valet parking. Habrá más sorpresas que anunciaremos pronto.",
+    a: "Taquiza de guisados, brindis, DJ, barra fría con refrescos y agua mineral, y la entrega de reconocimientos. Además, el salón cuenta con valet parking. Habrá más sorpresas que anunciaremos pronto.",
   },
   {
     q: "¿Es una boda de verdad?",

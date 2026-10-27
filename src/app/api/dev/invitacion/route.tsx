@@ -170,7 +170,7 @@ export async function GET(req: Request) {
                   }}
                 >
                   {/* non-breaking spaces keep each item on one line */}
-                  {[...INCLUDES.map((i) => i.title), "Valet parking"].map((t) => t.replace(/ /g, " ")).join("  ·  ")}
+                  {[...INCLUDES.filter((i) => !i.soon).map((i) => i.title), "Valet parking"].map((t) => t.replace(/ /g, " ")).join("  ·  ")}
                 </div>
               </div>
             )}
