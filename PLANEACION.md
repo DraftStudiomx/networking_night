@@ -20,7 +20,7 @@ de evento** (no una invitación de boda literal) con lenguaje y estética de bod
 |---|---|
 | Nombre | Networking Night: Save the Date |
 | Fecha | Sábado 28 de noviembre de 2026 |
-| Hora | 4:00 pm |
+| Hora | 3:00 pm |
 | Lugar | Salón Callejón Arroyo. Valle del Arroyo 217, Santa Gertrudis, 37547 León de los Aldama, Gto. |
 | Mapa | https://share.google/uOkEFeiKjo0m9a98l |
 | Hora de cierre | Por definir |
@@ -185,7 +185,7 @@ subdominio apuntando a Vercel.
 - Login para 1–2 personas de staff; usa la cámara del celular.
 - Al escanear se muestra:
   - ✅ **Válido**: comprador, asistente (si hay), boleto 2 de 3, miembro de qué capítulo o invitado → se marca como ingresado.
-  - ⚠️ **YA INGRESÓ a las 4:12 pm**, con los datos del boleto, quién lo escaneó y a qué hora.
+  - ⚠️ **YA INGRESÓ a las 3:12 pm**, con los datos del boleto, quién lo escaneó y a qué hora.
   - ❌ **No válido / pago pendiente / no existe.**
 - Búsqueda manual por nombre o código, por si un QR no se puede leer.
 - **Cada escaneo queda registrado**, incluidos los rechazados.

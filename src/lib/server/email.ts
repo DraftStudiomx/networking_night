@@ -30,7 +30,7 @@ function shell(inner: string) {
 </td></tr>
 ${inner}
 <tr><td align="center" style="padding:24px 28px 32px;border-top:1px dashed #141414;font:13px/1.5 Arial,sans-serif;color:#5E5F62">
-${EVENT.dateLong} · 4:00 pm<br>${EVENT.venue.name}, ${EVENT.venue.city}<br>
+${EVENT.dateLong} · ${EVENT.dateLabel.time}<br>${EVENT.venue.name}, ${EVENT.venue.city}<br>
 <a href="${EVENT.venue.mapUrl}" style="color:#141414">Cómo llegar</a> · Valet parking incluido · Etiqueta formal<br><br>
 ¿Dudas? Escríbenos a <a href="mailto:${EVENT.contactEmail}" style="color:#141414">${EVENT.contactEmail}</a>
 </td></tr>

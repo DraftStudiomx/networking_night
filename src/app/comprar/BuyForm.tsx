@@ -215,7 +215,7 @@ export function BuyForm({ oxxo, canceled }: { oxxo: boolean; canceled: boolean }
           R.S.V.P.
         </h1>
         <p className={s.lede}>
-          {EVENT.dateLong}, 4:00 pm
+          {EVENT.dateLong}, {EVENT.dateLabel.time}
           <br />
           {formatMXN(EVENT.priceMXN)} por persona
         </p>

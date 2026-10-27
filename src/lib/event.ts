@@ -9,9 +9,9 @@ export const EVENT = {
     "El primer capítulo de BNI en México y el capítulo más joven de León se dan el sí.",
   // BNI arrived in Mexico in 2006: the wedding celebrates its 20 years in the country
   anniversary: "Celebramos 20 años de BNI en México",
-  // 28 Nov 2026, 4:00 pm in León (UTC-6, no DST in Guanajuato)
-  startsAt: "2026-11-28T16:00:00-06:00",
-  dateLabel: { day: "Sábado", date: "28 Nov", time: "4:00 pm", dress: "Formal" },
+  // 28 Nov 2026, 3:00 pm in León (UTC-6, no DST in Guanajuato)
+  startsAt: "2026-11-28T15:00:00-06:00",
+  dateLabel: { day: "Sábado", date: "28 Nov", time: "3:00 pm", dress: "Formal" },
   dateLong: "Sábado 28 de noviembre de 2026",
   venue: {
     name: "Salón Callejón Arroyo",

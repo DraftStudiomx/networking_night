@@ -179,7 +179,7 @@ export async function GET(req: Request) {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
             <div style={{ display: "flex", width: "100%", borderTop: `2px solid ${C.ink}`, borderBottom: `2px solid ${C.ink}` }}>
               {cell("Sábado", "28 NOV", true)}
-              {cell("Recepción", "4:00 PM")}
+              {cell("Recepción", EVENT.dateLabel.time.toUpperCase())}
               {cell("Etiqueta", "FORMAL")}
             </div>
             <div style={{ ...label, fontSize: 24, letterSpacing: 8, marginTop: 26 }}>{EVENT.venue.name}</div>

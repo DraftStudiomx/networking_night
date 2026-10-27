@@ -154,7 +154,7 @@ export default function Home() {
             <dl className={s.facts}>
               <div>
                 <dt className="label tr muted">Cuándo</dt>
-                <dd>{EVENT.dateLong}, 4:00 pm</dd>
+                <dd>{EVENT.dateLong}, {EVENT.dateLabel.time}</dd>
               </div>
               <div>
                 <dt className="label tr muted">Dónde</dt>

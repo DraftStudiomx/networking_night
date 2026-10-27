@@ -63,7 +63,7 @@ export default async function OpengraphImage() {
           <div style={{ width: 120, height: 1, background: C.ink, marginTop: 30, marginBottom: 28 }} />
 
           <div style={{ ...label, fontSize: 21, color: C.muted, letterSpacing: 4 }}>
-            {`SÁBADO 28 NOV 2026 · 4:00 PM · ${EVENT.venue.name.toUpperCase()}, LEÓN`}
+            {`SÁBADO 28 NOV 2026 · ${EVENT.dateLabel.time.toUpperCase()} · ${EVENT.venue.name.toUpperCase()}, LEÓN`}
           </div>
         </div>
       </div>

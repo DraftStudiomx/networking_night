@@ -26,7 +26,7 @@ Es la "boda" entre **Pioneros**, el primer capítulo de BNI en todo México (20 
 
 ## Operating Context
 
-- Sábado 28 de noviembre de 2026, 4:00 pm, Salón Callejón Arroyo (Valle del Arroyo 217, Santa Gertrudis, León, Gto.). Dress code: formal de boda.
+- Sábado 28 de noviembre de 2026, 3:00 pm, Salón Callejón Arroyo (Valle del Arroyo 217, Santa Gertrudis, León, Gto.). Dress code: formal de boda.
 - Boleto único de $600 MXN, sin factura ni descuentos; compra múltiple; boletos transferibles.
 - Pago con tarjeta u OXXO; el boleto llega por correo (PDF + link).
 - El día del evento se escanean los QR en la entrada.

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Networking Night · Save the Date",
   description:
-    "Pioneros y Metamorfosis se dan el sí. Sábado 28 de noviembre, 4:00 pm, Salón Callejón Arroyo, León. Boletos $600.",
+    "Pioneros y Metamorfosis se dan el sí. Sábado 28 de noviembre, 3:00 pm, Salón Callejón Arroyo, León. Boletos $600.",
   openGraph: {
     title: "Networking Night · Save the Date",
     description: "Pioneros & Metamorfosis · Sábado 28 de noviembre · Salón Callejón Arroyo, León.",
