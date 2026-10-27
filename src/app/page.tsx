@@ -43,16 +43,17 @@ export default function Home() {
         <Ticket as="section" medallion tear className={`${s.hero} ticket--draw`} aria-label="Invitación">
           <div className={s.body}>
             <h1 className={s.title}>
-              <span className={`${s.std} tr`}>Save the date</span>
+              <span className={`${s.std} tr`}>Networking Night</span>
               <span className={`${s.nn} display tr`}>
-                <RevealText text="Networking" delay={250} />
-                <RevealText text="Night" delay={750} step={70} className={s.night} />
+                <RevealText text="Save the" delay={250} />
+                <RevealText text="Date" delay={700} step={70} className={s.night} />
               </span>
             </h1>
             <p className={`${s.couple} tr`}>
               Pioneros <em>&amp;</em> Metamorfosis
             </p>
             <p className={s.lede}>{EVENT.premise}</p>
+            <p className={`${s.anniv} tr`}>{EVENT.anniversary}</p>
 
             <Divider />
 

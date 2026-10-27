@@ -23,9 +23,10 @@ function shell(inner: string) {
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">
 <table role="presentation" width="100%" style="max-width:520px;background:#F6F5F1;border:2px solid #141414;outline:1px solid #141414;outline-offset:-8px" cellspacing="0" cellpadding="0">
 <tr><td align="center" style="padding:40px 28px 8px">
-<div style="font:600 11px Arial,sans-serif;letter-spacing:5px;text-transform:uppercase">Save the date</div>
-<div style="font:400 34px/1.05 Georgia,serif;letter-spacing:4px;text-transform:uppercase;margin-top:12px">Networking<br>Night</div>
+<div style="font:600 12px Arial,sans-serif;letter-spacing:5px;text-transform:uppercase;color:#C8102E">Networking Night</div>
+<div style="font:400 34px/1.05 Georgia,serif;letter-spacing:4px;text-transform:uppercase;margin-top:12px">Save the<br>Date</div>
 <div style="font:600 11px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;margin-top:12px">Pioneros <span style="color:#C8102E">&amp;</span> Metamorfosis</div>
+<div style="font:600 10px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;margin-top:10px;color:#C8102E">${EVENT.anniversary}</div>
 </td></tr>
 ${inner}
 <tr><td align="center" style="padding:24px 28px 32px;border-top:1px dashed #141414;font:13px/1.5 Arial,sans-serif;color:#5E5F62">

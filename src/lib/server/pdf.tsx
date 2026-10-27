@@ -27,9 +27,9 @@ const PAGE = "#E9E7E1";
 // Ticket geometry (points). The ticket sits on a page-coloured margin so its frame
 // never touches the edge of the PDF viewer.
 const W = 300;
-const H = 530;
+const H = 540;
 const R = 22;
-const TEAR = 436;
+const TEAR = 446;
 const M = 24;
 const PW = W + M * 2;
 const PH = H + M * 2;
@@ -42,10 +42,11 @@ const st = StyleSheet.create({
   frame: { position: "absolute", top: 0, left: 0 },
   ticket: { position: "absolute", top: M, left: M, width: W, height: H },
   body: { position: "absolute", top: 34, left: 24, right: 24, alignItems: "center" },
-  std: { fontSize: 7, fontWeight: 600, letterSpacing: 3.2, textTransform: "uppercase" },
+  std: { fontSize: 8.5, fontWeight: 600, letterSpacing: 3.4, color: RED, textTransform: "uppercase" },
   nn: { fontFamily: "Forum", fontSize: 25, letterSpacing: 2, marginTop: 8 },
   night: { fontFamily: "Forum", fontSize: 37, letterSpacing: 2, marginTop: -4 },
   couple: { fontSize: 7, fontWeight: 600, letterSpacing: 1.8, marginTop: 6, textTransform: "uppercase" },
+  anniv: { fontSize: 6, fontWeight: 600, letterSpacing: 1.3, color: RED, marginTop: 6, textTransform: "uppercase" },
   name: { fontFamily: "Forum", fontSize: 18, marginTop: 14, textAlign: "center" },
   member: { fontSize: 7, letterSpacing: 1.6, color: MUTED, marginTop: 3, textTransform: "uppercase" },
   qr: { width: 132, height: 132, marginTop: 12 },
@@ -95,12 +96,13 @@ function TicketPage({ t, qr }: { t: PdfTicket; qr: string }) {
 
       <View style={st.ticket}>
         <View style={st.body}>
-          <Text style={st.std}>Save the date</Text>
-          <Text style={st.nn}>NETWORKING</Text>
-          <Text style={st.night}>NIGHT</Text>
+          <Text style={st.std}>Networking Night</Text>
+          <Text style={st.nn}>SAVE THE</Text>
+          <Text style={st.night}>DATE</Text>
           <Text style={st.couple}>
             Pioneros <Text style={{ color: RED }}>&amp;</Text> Metamorfosis
           </Text>
+          <Text style={st.anniv}>{EVENT.anniversary}</Text>
           <Text style={st.name}>{t.attendeeName}</Text>
           <Text style={st.member}>{memberLine(t.membership, t.chapter)}</Text>
           <Image style={st.qr} src={qr} />

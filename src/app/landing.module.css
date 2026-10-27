@@ -68,28 +68,31 @@
   align-items: center;
   font-weight: 400;
 }
+/* the event name sits above the big "Save the date", in BNI red */
 .std {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  --ls: 0.5em;
+  white-space: nowrap;
+  color: var(--red);
+  --ls: 0.34em;
 }
 .std::before,
 .std::after {
   content: "";
-  width: 28px;
+  width: 18px;
   height: 1px;
-  background: var(--ink);
+  background: var(--red);
 }
 .nn {
   margin-top: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: clamp(30px, 8.2vw, 84px);
+  font-size: clamp(34px, 10.5vw, 84px);
   line-height: 1;
   white-space: nowrap;
   --ls: 0.08em;
@@ -110,6 +113,34 @@
 .couple em {
   font-style: normal;
   color: var(--red);
+}
+
+/* the 20 years the wedding celebrates */
+.anniv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--red);
+  text-wrap: balance;
+  --ls: 0.2em;
+}
+/* side rules only where the line fits on one row */
+@media (min-width: 600px) {
+  .anniv::before,
+  .anniv::after {
+    content: "";
+    flex: none;
+    width: 24px;
+    height: 1px;
+    background: var(--red);
+  }
 }
 
 .lede {
@@ -506,6 +537,14 @@
   .couple {
     font-size: 13px;
     --ls: 0.34em;
+  }
+  .std {
+    font-size: 16px;
+    --ls: 0.5em;
+  }
+  .anniv {
+    font-size: 13px;
+    --ls: 0.3em;
   }
   .lede {
     font-size: 17px;

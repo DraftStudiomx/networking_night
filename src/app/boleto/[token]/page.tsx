@@ -42,15 +42,16 @@ export default async function Boleto({ params }: { params: Promise<{ token: stri
       <main>
         <Ticket as="section" medallion tear className={s.panel} aria-label="Boleto">
           <h1 className={l.title}>
-            <span className={`${l.std} tr`}>Save the date</span>
+            <span className={`${l.std} tr`}>Networking Night</span>
             <span className={`${l.nn} display tr`}>
-              <span>Networking</span>
-              <span className={l.night}>Night</span>
+              <span>Save the</span>
+              <span className={l.night}>Date</span>
             </span>
           </h1>
           <p className={`${l.couple} tr`}>
             Pioneros <em>&amp;</em> Metamorfosis
           </p>
+          <p className={`${l.anniv} tr`}>{EVENT.anniversary}</p>
 
           {usable ? (
             <>
